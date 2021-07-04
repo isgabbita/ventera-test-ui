@@ -1,0 +1,195 @@
+<div class="container" role="main">
+    <div class="flex-container" fxLayout="row" fxLayoutAlign="center">
+
+        <div class="conversion__form" *ngIf="!conversionData">
+            <div class="error-messages" *ngIf="errorMessages">
+                <mat-chip-list *ngIf="message">
+                    <mat-chip
+                            [selectable]="selectable"
+                            [removable]="removable">
+                        {{message}}
+                        <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+            </div>
+            <form
+                    [formGroup]="conversionForm"
+                    (ngSubmit)="onSubmit()">
+                <mat-card class="mat-elevation-z5" style="padding: 0px !important;">
+                    <mat-card-header style="background-color:#2196F3;padding:5px;border-radius: 10px 10px 0 0;" fxLayoutAlign="start">
+                        <mat-card-title style="color: white; padding-top: 10px;">Check Conversion</mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content style="padding:15px !important;">
+                        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px grid">
+                            <mat-form-field class="half-width">
+                                <mat-label>
+                                    Input Unit of Measure
+                                    <span
+                                            class="error"
+                                            *ngIf="!conversionForm.get('inputUOM').valid"
+                                    >*</span
+                                    >
+                                    <span
+                                            class="pass"
+                                            *ngIf="conversionForm.get('inputUOM').valid"
+                                    >✓</span
+                                    >
+                                </mat-label>
+                                <input
+                                        matInput
+                                        formControlName="inputUOM"
+                                        [errorStateMatcher]="matcher"
+                                        maxlength="25"
+                                        minlength="1"
+                                        placeholder="Kelvin"
+                                        matTooltipPosition="right"
+                                        matTooltip="Enter Input Unit Of Measure using alpha characters."
+                                />
+                                <mat-error
+                                        *ngIf="
+                                        conversionForm.get('inputUOM').hasError('pattern') &&
+                                        !conversionForm.get('inputUOM').hasError('required')
+                                    "
+                                >
+                                    Please enter a valid Input Unit of Measure
+                                </mat-error>
+                                <mat-error
+                                        *ngIf="
+                                        conversionForm.get('inputUOM').hasError('required')
+                                    "
+                                >
+                                    Input Unit of Measure is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="half-width">
+                                <mat-label>
+                                    Input
+                                    <span
+                                            class="error"
+                                            *ngIf="!conversionForm.get('input').valid"
+                                    >*</span
+                                    >
+                                    <span
+                                            class="pass"
+                                            *ngIf="conversionForm.get('input').valid"
+                                    >✓</span
+                                    >
+                                </mat-label>
+                                <input
+                                        matInput
+                                        formControlName="input"
+                                        [errorStateMatcher]="matcher"
+                                        placeholder="000.000"
+                                        maxlength="20"
+                                        minlength="1"
+                                        matTooltipPosition="before"
+                                        matTooltipClass="tooltip-green"
+                                        matTooltip="Enter Input as a numeric value"
+                                />
+                                <mat-error
+                                        *ngIf="conversionForm.get('input').hasError('pattern')"
+                                >
+                                    Please enter a valid Input
+                                </mat-error>
+                                <mat-error
+                                        *ngIf="conversionForm.get('input').hasError('required')"
+                                >
+                                    Input is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+
+                        </div>
+                        <div fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px grid">
+                            <mat-form-field class="half-width">
+                                <mat-label>
+                                    Target Unit of Measure
+                                    <span
+                                            class="error"
+                                            *ngIf="!conversionForm.get('targetUOM').valid"
+                                    >*</span
+                                    >
+                                    <span
+                                            class="pass"
+                                            *ngIf="conversionForm.get('targetUOM').valid"
+                                    >✓</span
+                                    >
+                                </mat-label>
+                                <input
+                                        matInput
+                                        formControlName="targetUOM"
+                                        [errorStateMatcher]="matcher"
+                                        maxlength="25"
+                                        minlength="1"
+                                        placeholder="Celsius"
+                                        matTooltipPosition="right"
+                                        matTooltip="Enter Target Unit Of Measure using alpha characters."
+                                />
+                                <mat-error
+                                        *ngIf="
+                                        conversionForm.get('targetUOM').hasError('pattern') &&
+                                        !conversionForm.get('targetUOM').hasError('required')
+                                    "
+                                >
+                                    Please enter a valid Target Unit of Measure
+                                </mat-error>
+                                <mat-error
+                                        *ngIf="
+                                        conversionForm.get('targetUOM').hasError('required')
+                                    "
+                                >
+                                    Target Unit of Measure is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                            <mat-form-field class="half-width">
+                                <mat-label>
+                                    Student Response
+                                    <span
+                                            class="error"
+                                            *ngIf="!conversionForm.get('studentResponse').valid"
+                                    >*</span
+                                    >
+                                    <span
+                                            class="pass"
+                                            *ngIf="conversionForm.get('studentResponse').valid"
+                                    >✓</span
+                                    >
+                                </mat-label>
+                                <input
+                                        matInput
+                                        formControlName="studentResponse"
+                                        [errorStateMatcher]="matcher"
+                                        placeholder="000.000"
+                                        maxlength="20"
+                                        minlength="1"
+                                        matTooltipPosition="before"
+                                        matTooltipClass="tooltip-green"
+                                        matTooltip="Enter Student Response as a numeric value"
+                                />
+                                <mat-error
+                                        *ngIf="conversionForm.get('studentResponse').hasError('pattern')"
+                                >
+                                    Please enter a valid student response
+                                </mat-error>
+                                <mat-error
+                                        *ngIf="conversionForm.get('studentResponse').hasError('required')"
+                                >
+                                    Student Response is <strong>required</strong>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </mat-card-content>
+                    <mat-card-actions style="padding:25px !important;" fxLayoutAlign="start">
+                        <button
+                                mat-flat-button
+                                color="primary"
+                                type="submit"
+                                [disabled]="!conversionForm.valid"
+                        >
+                            Check
+                        </button>
+                    </mat-card-actions>
+                </mat-card>
+            </form>
+        </div>
+    </div>
+</div>
